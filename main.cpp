@@ -24,6 +24,16 @@ std::vector<real> input(int d){
     return m;
 }
 
+std::vector<real> mult(std::vector<real> m1, std::vector<real> m2, int d){
+    std::vector<real> r(d * d);
+
+    for (int i = 0; i < r.size(); i++){
+        
+    }
+
+    return r;
+}
+
 int main(int argc, char const *argv[]){
     int d = 0;
     cout << "dimensoes: " << endl;
@@ -44,6 +54,10 @@ int main(int argc, char const *argv[]){
     prettyPrint(m2, d);
 
     cout << endl;
+
+    vetor m3 = mult(m1, m2, d);
+    prettyPrint(m3, d);
+
 
     return 0;
 }
