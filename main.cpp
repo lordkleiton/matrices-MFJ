@@ -6,6 +6,7 @@ using namespace std;
 
 typedef double real;
 typedef vector<real> vetor;
+typedef vector<vetor> matriz;
 
 void prettyPrint(std::vector<real> m, int d){
     for (int i = 0; i < m.size(); i++){
@@ -16,7 +17,7 @@ void prettyPrint(std::vector<real> m, int d){
 }
 
 std::vector<real> input(int d){
-    std::vector<real> m(d*d);
+    std::vector<real> m(d * d);
 
     for (int i = 0; i < m.size(); i++)
         cin >> m[i];
@@ -24,14 +25,51 @@ std::vector<real> input(int d){
     return m;
 }
 
+std::vector<std::vector<real>> converteAM(std::vector<real> m, int d){
+    matriz r(d, vetor(d));
+    int a = 0;
+
+    for (int i = 0; i < d; i++){
+        for (int j = 0; j < d; j++){
+            r[i][j] = m[a + i + j];
+        }
+
+        a += d - 1;
+    }
+
+    return r;
+}
+
+std::vector<real> converteMA(std::vector<std::vector<real>> m, int d){
+    vetor r(d * d);
+    int a = 0;
+
+    for (int i = 0; i < d; i++){
+        for (int j = 0; j < d; j++){
+            r[a + i + j] = m[i][j];
+        }
+
+        a += d - 1;
+    }
+
+    return r;
+}
+
 std::vector<real> mult(std::vector<real> m1, std::vector<real> m2, int d){
     std::vector<real> r(d * d);
+    std::vector<std::vector<real>> aux1 = converteAM(m1, d);
+    std::vector<std::vector<real>> aux2 = converteAM(m2, d);
+    std::vector<std::vector<real>> aux3(d, std::vector<real>(d));
 
-    /* for (int i = 0; i < r.size(); i++){
-        for (int j = 0; i < r.size(); i++){
-
+    for (int i = 0; i < d; i++){
+        for (int j = 0; j < d; j++){
+            for (int k = 0; k < d; k++){
+                aux3[i][j] += aux1[i][k] * aux2[k][j];
+            }
         }
-    } */
+    }
+
+    r = converteMA(aux3, d);
 
     return r;
 }
@@ -45,7 +83,7 @@ std::vector<real> transposta(std::vector<real> m, int d){
         for (int j = 0; j < d; j++){
             if (c > (d * d - 1)) c = 0;
 
-            r[c+i] = m[i + j + a];
+            r[c + i] = m[i + j + a];
 
             c += d;
         }
@@ -80,15 +118,22 @@ int main(int argc, char const *argv[]){
     cout << endl; */
 
     //vetor m3 = mult(m1, m2, d);
-    int d = 3;
-    vetor m1 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int d = 2;
+    vetor m1 = {0, 1, 2, 3};//, 5, 6, 7, 8, 9};
+    vetor m2 = {0, 1, 2, 3};//, 5, 6, 7, 8, 9};
+
+    //vetor m1 = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+    //vetor m2 = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+
     //vetor m1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
 
     prettyPrint(m1, d);
+    cout << endl;
 
-    vetor m3 = transposta(m1, d);
+    //vetor m3 = transposta(m1, d);
+    vetor m3 = mult(m1, m2, d);
+
     prettyPrint(m3, d);
-
 
     return 0;
 }
