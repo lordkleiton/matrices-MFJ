@@ -94,6 +94,19 @@ std::vector<real> transposta(std::vector<real> m, int d){
     return r;
 }
 
+std::vector<real> identidade(int d){
+    std::vector<real> r(d * d);
+    int ponto = 0;
+
+    for (int i = 0; i < r.size(); i++){
+        if (ponto > (r.size() - 1)) ponto = 0;
+        r[ponto] = 1;
+        ponto += d + 1;
+    }
+
+    return r;
+}
+
 int main(int argc, char const *argv[]){
     /* int d = 0;
     cout << "dimensoes (2, 3 ou 4): " << endl;
@@ -132,8 +145,12 @@ int main(int argc, char const *argv[]){
 
     //vetor m3 = transposta(m1, d);
     vetor m3 = mult(m1, m2, d);
-
     prettyPrint(m3, d);
+    cout << endl;
+
+    vetor v5 = identidade(5);
+    prettyPrint(v5, 5);
+    cout << endl;
 
     return 0;
 }
