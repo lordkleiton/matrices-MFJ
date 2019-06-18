@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <math.h>
 
 using namespace std;
 
@@ -143,18 +144,54 @@ vetor translacao(vetor v1, vetor v2){
     return r;
 }
 
+vetor rotacao(real angulo, int eixo, vetor v1){
+    vetor m(16);
+    vetor r(4);
+    real a = angulo * M_PI / 180;
+    int aux = 0;
+
+    switch (eixo){
+        case 0:
+            m = {   1, 0, 0, 0,
+                    0, cos(a), -sin(a), 0,
+                    0, sin(a), cos(a), 0,
+                    0, 0, 0, 1};
+            break;
+        case 1:
+            m = {   cos(a), 0, sin(a), 0,
+                    0, 1, 0, 0,
+                    -sin(a), 0, cos(a), 0,
+                    0, 0, 0, 1};
+            break;
+        case 2:
+            m = {   cos(a), -sin(a), 0, 0,
+                    sin(a), cos(a), 0, 0,
+                    0, 0, 1, 0,
+                    0, 0, 0, 1};
+            break;
+    }
+
+    for (int i = 0; i < 4; i++){
+        for (int j = 0; j < 4; j++){
+            r[i] += m[aux + i + j] * v1[j];
+        }
+        aux += 3;
+    }
+
+
+    return r;
+}
+
 int main(int argc, char const *argv[]){
     vetor aa = {2, 0.5, 2, 1};
     vetor bb = {45, 125, 4, 1};
 
     //vetor v6 = escala(aa, bb);
     //vetor v6 = translacao(aa, bb);
-    vetor v6 = escala(aa, bb);
+    //vetor v6 = rotacao(aa, bb);
+    vetor v6 = rotacao(45, 0, bb);
+
     prettyPrint(v6, 4);
-
-    int hm = -1;
-
-    cout << -hm << endl;
 
     return 0;
     /* int d = 0;
