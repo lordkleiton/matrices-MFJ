@@ -9,7 +9,7 @@ typedef double real;
 typedef vector<real> vetor;
 typedef vector<vetor> matriz;
 
-void prettyPrint(std::vector<real> m, int d){
+void prettyPrint(vetor m, int d){
     for (int i = 0; i < m.size(); i++){
         if (i % d == 0) cout << "| ";
         cout << m[i] << " ";
@@ -17,8 +17,8 @@ void prettyPrint(std::vector<real> m, int d){
     }
 }
 
-std::vector<real> input(int d){
-    std::vector<real> m(d * d);
+vetor input(int d){
+    vetor m(d * d);
 
     for (int i = 0; i < m.size(); i++)
         cin >> m[i];
@@ -26,7 +26,7 @@ std::vector<real> input(int d){
     return m;
 }
 
-std::vector<std::vector<real>> converteAM(std::vector<real> m, int d){
+matriz converteArrayMatriz(vetor m, int d){
     matriz r(d, vetor(d));
     int a = 0;
 
@@ -40,7 +40,7 @@ std::vector<std::vector<real>> converteAM(std::vector<real> m, int d){
     return r;
 }
 
-std::vector<real> converteMA(std::vector<std::vector<real>> m, int d){
+vetor converteMatrizArray(matriz m, int d){
     vetor r(d * d);
     int a = 0;
 
@@ -54,11 +54,11 @@ std::vector<real> converteMA(std::vector<std::vector<real>> m, int d){
     return r;
 }
 
-std::vector<real> mult(std::vector<real> m1, std::vector<real> m2, int d){
-    std::vector<real> r(d * d);
-    std::vector<std::vector<real>> aux1 = converteAM(m1, d);
-    std::vector<std::vector<real>> aux2 = converteAM(m2, d);
-    std::vector<std::vector<real>> aux3(d, std::vector<real>(d));
+vetor multiplica(vetor m1, vetor m2, int d){
+    vetor r(d * d);
+    matriz aux1 = converteArrayMatriz(m1, d);
+    matriz aux2 = converteArrayMatriz(m2, d);
+    matriz aux3(d, vetor(d));
 
     for (int i = 0; i < d; i++){
         for (int j = 0; j < d; j++){
@@ -68,13 +68,13 @@ std::vector<real> mult(std::vector<real> m1, std::vector<real> m2, int d){
         }
     }
 
-    r = converteMA(aux3, d);
+    r = converteMatrizArray(aux3, d);
 
     return r;
 }
 
-std::vector<real> transposta(std::vector<real> m, int d){
-    std::vector<real> r(d * d);
+vetor transposta(vetor m, int d){
+    vetor r(d * d);
     int c = 0;
     int a = 0;
 
@@ -106,8 +106,8 @@ vetor transformaPonto3d(vetor v1, vetor v2){
     return r;
 }
 
-std::vector<real> identidade(int d){
-    std::vector<real> r(d * d);
+vetor identidade(int d){
+    vetor r(d * d);
     int ponto = 0;
 
     for (int i = 0; i < r.size(); i++){
@@ -174,8 +174,6 @@ vetor rotacao(real angulo, int eixo, vetor v1){
     return r;
 }
 
-
-
 int main(int argc, char const *argv[]){
     vetor a = {2, 0.5, 2, 1};
     vetor b = {45, 125, 4, 1};
@@ -183,8 +181,13 @@ int main(int argc, char const *argv[]){
     //vetor v6 = escala(a, b);
     //vetor v6 = translacao(a, b);
     vetor v = rotacao(45, 0, b);
-
     prettyPrint(v, 4);
+
+    vetor v2 = {1, 2, 3, 4};
+    vetor v3 = {4, 3, 2, 1};
+
+    vetor v5 = multiplica(v2, v3, 2);
+    prettyPrint(v5, 2);
 
     return 0;
 }
