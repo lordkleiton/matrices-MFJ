@@ -34,7 +34,6 @@ std::vector<std::vector<real>> converteAM(std::vector<real> m, int d){
         for (int j = 0; j < d; j++){
             r[i][j] = m[a + i + j];
         }
-
         a += d - 1;
     }
 
@@ -49,7 +48,6 @@ std::vector<real> converteMA(std::vector<std::vector<real>> m, int d){
         for (int j = 0; j < d; j++){
             r[a + i + j] = m[i][j];
         }
-
         a += d - 1;
     }
 
@@ -88,8 +86,21 @@ std::vector<real> transposta(std::vector<real> m, int d){
 
             c += d;
         }
-
         a += d - 1;
+    }
+
+    return r;
+}
+
+vetor transformaPonto3d(vetor v1, vetor v2){
+    vetor r(4);
+    int aux = 0;
+
+    for (int i = 0; i < 4; i++){
+        for (int j = 0; j < 4; j++){
+            r[i] += v1[aux + i + j] * v2[j];
+        }
+        aux += 3;
     }
 
     return r;
@@ -113,15 +124,9 @@ vetor escala(vetor v1, vetor v2){
                 0, v1[1], 0, 0,
                 0, 0, v1[2], 0,
                 0, 0, 0, 1};
-    vetor r(4);
     int aux = 0;
 
-    for (int i = 0; i < 4; i++){
-        for (int j = 0; j < 4; j++){
-            r[i] += m[aux + i + j] * v2[j];
-        }
-        aux += 3;
-    }
+    vetor r = transformaPonto3d(m, v2);
 
     return r;
 }
@@ -131,22 +136,15 @@ vetor translacao(vetor v1, vetor v2){
                 0, 1, 0, v1[1],
                 0, 0, 1, v1[2],
                 0, 0, 0, 1};
-    vetor r(4);
     int aux = 0;
 
-    for (int i = 0; i < 4; i++){
-        for (int j = 0; j < 4; j++){
-            r[i] += m[aux + i + j] * v2[j];
-        }
-        aux += 3;
-    }
+    vetor r = transformaPonto3d(m, v2);
 
     return r;
 }
 
 vetor rotacao(real angulo, int eixo, vetor v1){
     vetor m(16);
-    vetor r(4);
     real a = angulo * M_PI / 180;
     int aux = 0;
 
@@ -171,73 +169,22 @@ vetor rotacao(real angulo, int eixo, vetor v1){
             break;
     }
 
-    for (int i = 0; i < 4; i++){
-        for (int j = 0; j < 4; j++){
-            r[i] += m[aux + i + j] * v1[j];
-        }
-        aux += 3;
-    }
-
+    vetor r = transformaPonto3d(m, v1);
 
     return r;
 }
 
+
+
 int main(int argc, char const *argv[]){
-    vetor aa = {2, 0.5, 2, 1};
-    vetor bb = {45, 125, 4, 1};
+    vetor a = {2, 0.5, 2, 1};
+    vetor b = {45, 125, 4, 1};
 
-    //vetor v6 = escala(aa, bb);
-    //vetor v6 = translacao(aa, bb);
-    //vetor v6 = rotacao(aa, bb);
-    vetor v6 = rotacao(45, 0, bb);
+    //vetor v6 = escala(a, b);
+    //vetor v6 = translacao(a, b);
+    vetor v = rotacao(45, 0, b);
 
-    prettyPrint(v6, 4);
+    prettyPrint(v, 4);
 
     return 0;
-    /* int d = 0;
-    cout << "dimensoes (2, 3 ou 4): " << endl;
-    cin >> d;
-
-    while (d < 2 || d > 4) cin >> d;
-
-    cout << "primeira matriz: " << endl;
-    vetor m1 = input(d);
-
-    cout << "segunda matriz: " << endl;
-    vetor m2 = input(d);
-
-    cout << "m1:" << endl;
-    prettyPrint(m1, d);
-
-    cout << endl;
-
-    cout << "m2:" << endl;
-    prettyPrint(m2, d);
-
-    cout << endl; */
-
-    //vetor m3 = mult(m1, m2, d);
-    /* int d = 2;
-    vetor m1 = {0, 1, 2, 3};//, 5, 6, 7, 8, 9};
-    vetor m2 = {0, */ //1, 2, 3};//, 5, 6, 7, 8, 9};
-
-    //vetor m1 = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-    //vetor m2 = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-
-    //vetor m1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
-
-    /* prettyPrint(m1, d);
-    cout << endl */;
-
-    //vetor m3 = transposta(m1, d);
-    //vetor m3 = mult(m1, m2, d);
-    //prettyPrint(m3, d);
-    /* 
-    cout << endl;
-
-    vetor v5 = identidade(5);
-    prettyPrint(v5, 5);
-    cout << endl; */
-
-    
 }
