@@ -107,7 +107,56 @@ std::vector<real> identidade(int d){
     return r;
 }
 
+vetor escala(vetor v1, vetor v2){
+    vetor m = {v1[0], 0, 0, 0,
+                0, v1[1], 0, 0,
+                0, 0, v1[2], 0,
+                0, 0, 0, 1};
+    vetor r(4);
+    int aux = 0;
+
+    for (int i = 0; i < 4; i++){
+        for (int j = 0; j < 4; j++){
+            r[i] += m[aux + i + j] * v2[j];
+        }
+        aux += 3;
+    }
+
+    return r;
+}
+
+vetor translacao(vetor v1, vetor v2){
+    vetor m = { 1, 0, 0, v1[0],
+                0, 1, 0, v1[1],
+                0, 0, 1, v1[2],
+                0, 0, 0, 1};
+    vetor r(4);
+    int aux = 0;
+
+    for (int i = 0; i < 4; i++){
+        for (int j = 0; j < 4; j++){
+            r[i] += m[aux + i + j] * v2[j];
+        }
+        aux += 3;
+    }
+
+    return r;
+}
+
 int main(int argc, char const *argv[]){
+    vetor aa = {2, 0.5, 2, 1};
+    vetor bb = {45, 125, 4, 1};
+
+    //vetor v6 = escala(aa, bb);
+    //vetor v6 = translacao(aa, bb);
+    vetor v6 = escala(aa, bb);
+    prettyPrint(v6, 4);
+
+    int hm = -1;
+
+    cout << -hm << endl;
+
+    return 0;
     /* int d = 0;
     cout << "dimensoes (2, 3 ou 4): " << endl;
     cin >> d;
@@ -131,26 +180,27 @@ int main(int argc, char const *argv[]){
     cout << endl; */
 
     //vetor m3 = mult(m1, m2, d);
-    int d = 2;
+    /* int d = 2;
     vetor m1 = {0, 1, 2, 3};//, 5, 6, 7, 8, 9};
-    vetor m2 = {0, 1, 2, 3};//, 5, 6, 7, 8, 9};
+    vetor m2 = {0, */ //1, 2, 3};//, 5, 6, 7, 8, 9};
 
     //vetor m1 = {0, 1, 2, 3, 4, 5, 6, 7, 8};
     //vetor m2 = {0, 1, 2, 3, 4, 5, 6, 7, 8};
 
     //vetor m1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
 
-    prettyPrint(m1, d);
-    cout << endl;
+    /* prettyPrint(m1, d);
+    cout << endl */;
 
     //vetor m3 = transposta(m1, d);
-    vetor m3 = mult(m1, m2, d);
-    prettyPrint(m3, d);
+    //vetor m3 = mult(m1, m2, d);
+    //prettyPrint(m3, d);
+    /* 
     cout << endl;
 
     vetor v5 = identidade(5);
     prettyPrint(v5, 5);
-    cout << endl;
+    cout << endl; */
 
-    return 0;
+    
 }
