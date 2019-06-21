@@ -12,7 +12,7 @@ typedef vector<vetor> matriz;
 void prettyPrint(vetor m, int d){
     for (int i = 0; i < m.size(); i++){
         if (i % d == 0) cout << "| ";
-        cout << m[i] << " ";
+        (m[i] < 10) ? cout << " " << m[i] << " " : cout << m[i] << " ";
         if ((i+1) % d == 0) cout << "|" << endl;
     }
 }
@@ -181,57 +181,91 @@ vetor rotacaoEixoQualquer(real angulo, vetor v){
     vetor riy = rotacao(-angulo, 1, rz);
     vetor rix = rotacao(-angulo, 0, riy);
 
-cout << endl;
-    prettyPrint(rx, 4);
-cout << endl;
-
-    prettyPrint(ry, 4);
-cout << endl;
-
-    prettyPrint(rz, 4);
-cout << endl;
-
-    prettyPrint(riy, 4);
-cout << endl;
-
-    prettyPrint(rix, 4);
-cout << endl;
-
-
-
     return rix;
 }
 
+void printVetor(vetor v){
+    std::vector<string> aux = {"x", "y", "z"};
+
+    for (int i = 0; i < 3; i++){
+        cout << aux[i] << ": " << v[i] << endl;
+    }
+}
+
 int main(int argc, char const *argv[]){
-    vetor a = {2, 0.5, 2, 1};
-    vetor b = {45, 125, 4, 1};
-/* 
-    //vetor v6 = escala(a, b);
-    //vetor v6 = translacao(a, b);
-    vetor v = rotacao(45, 0, b);
-    prettyPrint(v, 4);
+    vetor a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25};
+    vetor b = {25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+    vetor ponto = {45, 125, 4, 1};
+    vetor vtranslacao = {200, 1250, 100, 1};
+    vetor vescala = {2, 1.5, 5, 1};
+    real angulo = 45;
+    int d = 5;
 
+    cout << "matriz a" << endl;
+    prettyPrint(a, d);
     cout << endl;
-
-    vetor v2 = {1, 2, 3, 4};
-    vetor v3 = {4, 3, 2, 1};
-
-    vetor v5 = multiplica(v2, v3, 2);
-    prettyPrint(v5, 2);
+    cout << "transposta de a" << endl;
+    vetor resultado = transposta(a, d);
+    prettyPrint(resultado, d);
     cout << endl;
-
-
-    vetor v6 = transposta(v3, 2);
-    prettyPrint(v6, 2);
+    cout << "matriz b" << endl;
+    prettyPrint(b, d);
     cout << endl;
-
-    vetor aaa=transposta(b,2);
-    vetor v7 = rotacao(-45, 0, v);
-    prettyPrint(v7, 4); */
-
-    vetor rodado = rotacaoEixoQualquer(45, b);
-    prettyPrint(rodado, 4);
-
+    cout << "transposta de b" << endl;
+    resultado = transposta(b, d);
+    prettyPrint(resultado, d);
+    cout << endl;
+    cout << "a multiplicada por b" << endl;
+    resultado = multiplica(a, b, d);
+    prettyPrint(resultado, d);
+    cout << endl;
+    cout << "b multiplicada por a" << endl;
+    resultado = multiplica(b, a, d);
+    prettyPrint(resultado, d);
+    cout << endl;
+    cout << "b multiplicada por a" << endl;
+    resultado = multiplica(b, a, d);
+    prettyPrint(resultado, d);
+    cout << endl;
+    cout << "matriz identidade de dimensão " << d << endl;
+    resultado = identidade(d);
+    prettyPrint(resultado, d);
+    cout << endl;
+    cout << "vetor ponto" << endl;
+    printVetor(ponto);
+    cout << endl;
+    cout << "vetor que vai transladar o vetor ponto" << endl;
+    printVetor(vtranslacao);
+    cout << endl;
+    cout << "ponto após translação" << endl;
+    resultado = translacao(ponto, vtranslacao);
+    printVetor(resultado);
+    cout << endl;
+    cout << "vetor que vai escalar o vetor ponto" << endl;
+    printVetor(vescala);
+    cout << endl;
+    cout << "ponto após escalonamento" << endl;
+    resultado = escala(ponto, vescala);
+    printVetor(resultado);
+    cout << endl;
+    cout << "angulo de rotação " << endl;
+    cout << angulo << " graus" << endl;
+    cout << endl;
+    cout << "vetor ponto rotacionado no eixo x por " << angulo << " graus" << endl;
+    resultado = rotacao(angulo, 0, ponto);
+    printVetor(resultado);
+    cout << endl;
+    cout << "vetor ponto rotacionado no eixo y por " << angulo << " graus" << endl;
+    resultado = rotacao(angulo, 1, ponto);
+    printVetor(resultado);
+    cout << endl;
+    cout << "vetor ponto rotacionado no eixo z por " << angulo << " graus" << endl;
+    resultado = rotacao(angulo, 2, ponto);
+    printVetor(resultado);
+    cout << endl;
+    cout << "vetor ponto rotacionado em eixo qualquer por " << angulo << " graus" << endl;
+    resultado = rotacaoEixoQualquer(angulo, ponto);
+    printVetor(resultado);
 
     return 0;
 }
