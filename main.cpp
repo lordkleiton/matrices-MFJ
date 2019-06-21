@@ -17,6 +17,14 @@ void prettyPrint(vetor m, int d){
     }
 }
 
+void printVetor(vetor v){
+    std::vector<string> aux = {"x", "y", "z"};
+
+    for (int i = 0; i < 3; i++){
+        cout << aux[i] << ": " << v[i] << endl;
+    }
+}
+
 vetor input(int d){
     vetor m(d * d);
 
@@ -182,14 +190,6 @@ vetor rotacaoEixoQualquer(real angulo, vetor v){
     vetor rix = rotacao(-angulo, 0, riy);
 
     return rix;
-}
-
-void printVetor(vetor v){
-    std::vector<string> aux = {"x", "y", "z"};
-
-    for (int i = 0; i < 3; i++){
-        cout << aux[i] << ": " << v[i] << endl;
-    }
 }
 
 int main(int argc, char const *argv[]){
