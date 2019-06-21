@@ -149,19 +149,19 @@ vetor rotacao(real angulo, int eixo, vetor v1){
     int aux = 0;
 
     switch (eixo){
-        case 0:
+        case 0: //x
             m = {   1, 0, 0, 0,
                     0, cos(a), -sin(a), 0,
                     0, sin(a), cos(a), 0,
                     0, 0, 0, 1};
             break;
-        case 1:
+        case 1: //y
             m = {   cos(a), 0, sin(a), 0,
                     0, 1, 0, 0,
                     -sin(a), 0, cos(a), 0,
                     0, 0, 0, 1};
             break;
-        case 2:
+        case 2: //z
             m = {   cos(a), -sin(a), 0, 0,
                     sin(a), cos(a), 0, 0,
                     0, 0, 1, 0,
@@ -174,20 +174,64 @@ vetor rotacao(real angulo, int eixo, vetor v1){
     return r;
 }
 
+vetor rotacaoEixoQualquer(real angulo, vetor v){
+    vetor rx = rotacao(angulo, 0, v);
+    vetor ry = rotacao(angulo, 1, rx);
+    vetor rz = rotacao(angulo, 2, ry);
+    vetor riy = rotacao(-angulo, 1, rz);
+    vetor rix = rotacao(-angulo, 0, riy);
+
+cout << endl;
+    prettyPrint(rx, 4);
+cout << endl;
+
+    prettyPrint(ry, 4);
+cout << endl;
+
+    prettyPrint(rz, 4);
+cout << endl;
+
+    prettyPrint(riy, 4);
+cout << endl;
+
+    prettyPrint(rix, 4);
+cout << endl;
+
+
+
+    return rix;
+}
+
 int main(int argc, char const *argv[]){
     vetor a = {2, 0.5, 2, 1};
     vetor b = {45, 125, 4, 1};
-
+/* 
     //vetor v6 = escala(a, b);
     //vetor v6 = translacao(a, b);
     vetor v = rotacao(45, 0, b);
     prettyPrint(v, 4);
+
+    cout << endl;
 
     vetor v2 = {1, 2, 3, 4};
     vetor v3 = {4, 3, 2, 1};
 
     vetor v5 = multiplica(v2, v3, 2);
     prettyPrint(v5, 2);
+    cout << endl;
+
+
+    vetor v6 = transposta(v3, 2);
+    prettyPrint(v6, 2);
+    cout << endl;
+
+    vetor aaa=transposta(b,2);
+    vetor v7 = rotacao(-45, 0, v);
+    prettyPrint(v7, 4); */
+
+    vetor rodado = rotacaoEixoQualquer(45, b);
+    prettyPrint(rodado, 4);
+
 
     return 0;
 }
